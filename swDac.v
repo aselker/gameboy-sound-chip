@@ -1,4 +1,4 @@
-module swDac #(parameter width = 4, sample_time = 100) (
+module swDac #(parameter width = 4, sample_time = 128 /*Default 32768 Hz*/) (
 	input [width-1:0] left,
 	input [width-1:0] right
 );
@@ -12,14 +12,10 @@ module swDac #(parameter width = 4, sample_time = 100) (
 		end
 	end
 
+	initial $display("%d %d", width, sample_time); // begin with params so we can interpret the file
+
 	always @(posedge clk) begin
 		$display("%d %d %d", $time, left, right);
-	end
-
-
-	initial begin
-		#1000;
-		$finish;
 	end
 
 endmodule
