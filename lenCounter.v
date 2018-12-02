@@ -12,7 +12,7 @@ module lenCounter(
 	// TODO: What if lenLoad = 1, trigger = high, lenEnable = high ?
 	always @(posedge clk) begin
 		if (lenEnable && (len != 0)) len--;
-		if (trigger) len = 6'd63 - lenLoad;
+		if (trigger) len = 6'd63 - lenLoad; // TODO: verify this math -- off-by-one?
 	end
 
 	assign chanEnable = len != 6'b0;
