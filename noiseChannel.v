@@ -12,10 +12,10 @@ module noiseChannel(
 	input clk,
 	input lenClk,
 	input [5:0] lenLoad, 
-	input [3:0] startVol, 
+	input [3:0] startVol, // TODO: Add volume control
 	input envAdd, 
 	input [2:0] envPeriod,
-	input [3:0] clkShift, 
+	input [3:0] clkShift,  // What is this?
 	input widthMode,
 	input [2:0] divisor,
 	input trigger, lenEnable,
@@ -29,11 +29,18 @@ module noiseChannel(
 	
 	lenCounter lc(lenClk, lenLoad, trigger, lenEnable, chanEnable);
 
-	assign period = clkShift == 0 ? 7'd8 : (16 * clkShift);
+	// assign period = divisor == 0 ? 7'd8 : (16 * divisor);
+	initial $display("Divisor is %d", divisor);
+	assign period = 0 ? 1 : 2;
 	varTimer #(7) tmr(clk, period, srClk);
+	initial $display("Period is %d", period);
 
 	initial sr = 14'b0;
-	always @(posedge srClk) sr <= widthMode ? {(sr[1]^sr[0]), sr[14:8], (sr[1]^sr[0]), sr[6:1]} : {(sr[1]^sr[0]), sr[13:1]};
+	always @(posedge srClk) begin
+		sr <= widthMode ? {(sr[1]^sr[0]), sr[14:8], (sr[1]^sr[0]), sr[6:1]} : {(sr[1]^sr[0]), sr[13:1]};
+		$display("SR contains: %b", sr);
+	end
+
 	assign noise = chanEnable && !sr[0];
 
 endmodule

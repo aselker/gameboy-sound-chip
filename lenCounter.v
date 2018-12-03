@@ -1,5 +1,5 @@
 module lenCounter(
-	input clk,
+	input clk, // TODO: maybe generate 256hz internally from 4mhz?
 	input [5:0] lenLoad,
 	input trigger,
 	input lenEnable,
