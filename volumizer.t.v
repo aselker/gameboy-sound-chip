@@ -9,7 +9,7 @@ module test_volumizer();
    reg[3:0] starting_volume;
    wire[3:0] volume;
 
-   volumizer test_vol (.clk(clk),
+   volumizer test_vol (.clk_64(clk),
       .envelope_add(envelope_add),
       .trigger(trigger),
       .period(period),
@@ -40,12 +40,13 @@ module test_volumizer();
       #200
       envelope_add <= 1'b1;
       starting_volume <= 4'h8;
+      period <= 3'b011;
       #8
       trigger <= 1'b1;
       #8;
       trigger <= 1'b0;
 
-      #200
+      #500
 
 
       $finish();
