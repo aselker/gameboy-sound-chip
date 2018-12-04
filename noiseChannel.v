@@ -29,16 +29,13 @@ module noiseChannel(
 	
 	lenCounter lc(lenClk, lenLoad, trigger, lenEnable, chanEnable);
 
-	// assign period = divisor == 0 ? 7'd8 : (16 * divisor);
-	initial $display("Divisor is %d", divisor);
-	assign period = 0 ? 1 : 2;
+	assign period = divisor == 0 ? 7'd8 : (16 * divisor);
 	varTimer #(7) tmr(clk, period, srClk);
-	initial $display("Period is %d", period);
 
-	initial sr = 14'b0;
+	initial sr = 15'b1;
 	always @(posedge srClk) begin
-		sr <= widthMode ? {(sr[1]^sr[0]), sr[14:8], (sr[1]^sr[0]), sr[6:1]} : {(sr[1]^sr[0]), sr[13:1]};
-		$display("SR contains: %b", sr);
+		sr <= widthMode ? {(sr[1]^sr[0]), sr[14:8], (sr[1]^sr[0]), sr[6:1]} : {(sr[1]^sr[0]), sr[14:1]};
+		// $display("SR contains: %b", sr);
 	end
 
 	assign noise = chanEnable && !sr[0];

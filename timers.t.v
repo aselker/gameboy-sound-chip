@@ -9,7 +9,7 @@ module testTimer();
 	varTimer #(3) tmr(clk, 3'd5, clkOut);
 
 	initial begin
-		clk = 0;
+		clk = 0; #10;
 		
 		$monitor("clk=%b, clkOut=%b, i=", clk, clkOut, tmr.i);
 
