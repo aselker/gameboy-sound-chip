@@ -13,8 +13,9 @@ module fixedTimer #(parameter period = 2) (
 );
 
 	reg [$clog2(period):0] i;
-	initial i = period;
-	always @(posedge clk) i <= i == 0 ? period-1 : i-1;
+	initial i = 1;
+	always @(posedge clk) i <= i-1;
+	always @(negedge clk) i <= i == 0 ? period : i;
 	assign clkOut = (i == 0);
 
 endmodule
@@ -26,8 +27,9 @@ module varTimer #(parameter width = 1) (
 );
 
 	reg [width-1:0] i;
-	initial i = period;
-	always @(posedge clk) i <= i == 0 ? period-1 : i-1;
+	initial i = 1;
+	always @(posedge clk) i <= i-1;
+	always @(negedge clk) i <= i == 0 ? period : i;
 	assign clkOut = (i == 0);
 
 endmodule
