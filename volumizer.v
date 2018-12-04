@@ -40,6 +40,7 @@ module volumizer(
                 volume <= volume - 4'h1;
             else
                change_enable <= 1'b0;
+         end
 
       end
 
