@@ -13,15 +13,15 @@ module testNoiseChannel();
 
 	reg trigger;
 	wire [3:0] noise;
-	noiseChannel noisechannel(clk, clk256, clk64, 6'd63, 4'd0, 1'd0, 3'd0, 4'd0, 1'd0, 3'd0, trigger, 1'd0, noise);
+	noiseChannel noisechannel(clk, clk256, clk64, 6'd63, 4'd7, 1'd0, 3'd3, 4'd0, 1'd0, 3'd0, trigger, 1'd0, noise);
 
 	assign left = noise;
 	assign right = noise;
 
 	initial begin
-		trigger = 0; #10; trigger = 1;
+		trigger = 0; #100; trigger = 1; #10; trigger = 0;
 
-		#41943 $finish;
+		#4194304 $finish;
 	end
 
 endmodule
