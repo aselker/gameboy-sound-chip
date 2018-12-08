@@ -1,5 +1,5 @@
 module lenCounter(
-	input clk, // TODO: maybe generate 256hz internally from 4mhz?
+	input clk_256, // TODO: maybe generate 256hz internally from 4mhz?
 	input [5:0] lenLoad,
 	input trigger,
 	input lenEnable,
@@ -11,7 +11,7 @@ module lenCounter(
 	initial chanEnable = 0;
 
 	// TODO: What if lenLoad = 1, trigger = high, lenEnable = high ?
-	always @(posedge clk) if (lenEnable && (len != 0) && !trigger) begin
+	always @(posedge clk_256) if (lenEnable && (len != 0) && !trigger) begin
 		len--;
 		chanEnable = len != 6'b0;
 	end
