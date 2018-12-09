@@ -1,7 +1,8 @@
 `include "pulseChannel1.v"
 `include "swDac.v"
 
-`define PERIOD 4194304/16
+// `define PERIOD 4194304/16
+`define PERIOD 131072
 `define LENGTH 10'd1023
 `define LONGREG reg [`LENGTH:0]
 
@@ -31,7 +32,10 @@ module gameboy();
 	wire clkT; fixedTimer #(`PERIOD) tmrT(clk, clkT);
 	reg [$clog2(`LENGTH)-1:0] t;
 	always @(posedge clkT) begin
-		if (t < `LENGTH) t += 1;
+		if (t < `LENGTH) begin
+			t += 1;
+			$display("yoink");
+		end
 		else $finish;
 	end
 
@@ -40,9 +44,10 @@ module gameboy();
 
 	swDac dac(sq1_out, sq1_out);
 
+	reg [4:0] ii; // Fill in the wave table with a triangle wave
+
 	initial begin
 
-		reg [4:0] ii; // Fill in the wave table with a triangle wave
 		for (ii = 0; ii < 16; ii++) waveTable[ii] = {ii[3:0]};
 		for (ii = 0; ii < 16; ii++) waveTable[ii+5'd16] = 4'd0 - {ii[3:0]};
 
