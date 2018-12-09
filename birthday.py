@@ -45,19 +45,13 @@ def noteToFreq(note):
 
 if __name__ == "__main__":
 
-  # Read verilog file
-  input_path = sys.argv[1]
-  verilog_read_file = open(input_path, 'r')
-  verilog_text = verilog_read_file.readlines()
-  verilog_read_file.close()
-  replace_string = "// PYTHON GO HERE"
-
   # Read csv file
   csv_path = sys.argv[2]
   csv_read_file = open(csv_path, 'r')
   csv_text = csv_read_file.readlines()
   csv_read_file.close()
 
+  assigns = []
   for line in csv_text:
     xs = line.rstrip().split(",")
     
@@ -84,5 +78,24 @@ if __name__ == "__main__":
 
       # Next, turn into a Verilog assign statement
       s = verilog_statement(arrayName, i, x)
-      print(s)
+      assigns += [s]
 
+  # Read verilog file
+  input_path = sys.argv[1]
+  verilog_read_file = open(input_path, 'r')
+  verilog_text = [x.rstrip() for x in verilog_read_file.readlines()]
+  verilog_read_file.close()
+
+  find = "// PYTHON GO HERE"
+  replace = " ".join(assigns)
+
+  # Which line has the marker?
+  i = 0
+  while find not in verilog_text[i]:
+    i += 1
+
+  verilog_text = verilog_text[:i] + [replace] + verilog_text[i+1:]
+
+  print("\n".join(verilog_text))
+  
+  
