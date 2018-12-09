@@ -24,9 +24,6 @@ module pulseChannel1 (
 
    output[3:0] amplitude
 
-
-
-
 );
 
    reg sweep_enabled;
