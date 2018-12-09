@@ -24,7 +24,7 @@ module volumizer(
 
    always @(posedge clk_64) begin
       if (~trigger) begin
-         if (period_counter < period - 8'b1)
+         if (period_counter < {5'b0, period - 3'b1})
             period_counter <= period_counter + 8'b1;
          else
             period_counter <= 8'b0;
@@ -34,7 +34,7 @@ module volumizer(
    always @(posedge trigger) begin
       volume <= starting_volume;
       change_enable <= 1'b1;
-      period_counter <= (period > 8'b1);
+      period_counter <= (period > 3'b1) ? 8'b1 : 8'b0;
    end
 
    always @(posedge clk_64) begin
