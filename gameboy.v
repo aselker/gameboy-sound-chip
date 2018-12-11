@@ -3,7 +3,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd187
+`define PLAYBACK_LENGTH 10'd80
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
@@ -23,6 +23,15 @@ module gameboy();
 	`LONGREG [10:0] sq1_freq;
 	`LONGREG sq1_trigger;
 	`LONGREG sq1_lenEnable;
+
+	`LONGREG [1:0] sq2_duty;
+	`LONGREG [5:0] sq2_lenLoad;
+	`LONGREG [3:0] sq2_startVol;
+	`LONGREG sq2_envAdd;
+	`LONGREG [2:0] sq2_period;
+	`LONGREG [10:0] sq2_freq;
+	`LONGREG sq2_trigger;
+	`LONGREG sq2_lenEnable;
 
 	wire clk; baseClk baseclk(clk);
 	wire clk256; fixedTimer #(16384) tmr256(clk, clk256);
