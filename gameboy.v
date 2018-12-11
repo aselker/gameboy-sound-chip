@@ -3,6 +3,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
+`define PLAYBACK_LENGTH 10'd10
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
@@ -31,23 +32,24 @@ module gameboy();
 	wire clkT; fixedTimer #(`PERIOD) tmrT(clk, clkT);
 	reg [$clog2(`LENGTH)-1:0] t;
 	always @(posedge clkT) begin
-		if (t < `LENGTH) t += 1;
+		if (t < `PLAYBACK_LENGTH) t += 1;
 		else $finish;
 	end
 
 	wire [3:0] sq1_out;
 	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_trigger[t], sq1_lenEnable[t], sq1_envAdd[t], sq1_out);
 
+	reg [4:0] ii; // Fill in the wave table with a triangle wave
+
 	swDac dac(sq1_out, sq1_out);
 
 	initial begin
+		t = 0;
 
-		reg [4:0] ii; // Fill in the wave table with a triangle wave
 		for (ii = 0; ii < 16; ii++) waveTable[ii] = {ii[3:0]};
 		for (ii = 0; ii < 16; ii++) waveTable[ii+5'd16] = 4'd0 - {ii[3:0]};
 
 		// PYTHON GO HERE
-
 		
 	end
 
