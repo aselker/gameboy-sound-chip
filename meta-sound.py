@@ -25,7 +25,7 @@ csv_row_to_array_name = {"SQ1 Sweep Period": "sq1_swpPd",
    "SQ2 Length Enable": "sq2_lenEnable"}
 
 def verilog_statement(array_name, index, value):
-   line = "%s[%s] <= %s;" % (array_name, index, value)
+   line = "%s[%s] = %s;\n" % (array_name, index, value)
    return line
 
 
