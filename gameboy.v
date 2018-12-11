@@ -3,7 +3,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd80
+`define PLAYBACK_LENGTH 10'd30
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
@@ -41,16 +41,14 @@ module gameboy();
 	wire clkT; fixedTimer #(`PERIOD) tmrT(clk, clkT);
 	reg [$clog2(`LENGTH)-1:0] t;
 	always @(posedge clkT) begin
-		trigger = sq1_trigger[t];
 		if (t < `PLAYBACK_LENGTH) t += 1;
 		else $finish;
 	end
 
 	wire [3:0] sq1_out, sq2_out;
-	reg trigger;
 
-	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_lenEnable[t], trigger, sq1_envAdd[t], sq1_out);
-	pulseChannel2 pc2(clk, clk256, clk128, clk64, sq2_freq[t], sq2_lenLoad[t], sq2_duty[t], sq2_startVol[t], sq2_period[t], sq2_lenEnable[t], trigger, sq2_envAdd[t], sq2_out);
+	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_lenEnable[t], sq1_trigger[t], sq1_envAdd[t], sq1_out);
+	pulseChannel2 pc2(clk, clk256, clk128, clk64, sq2_freq[t], sq2_lenLoad[t], sq2_duty[t], sq2_startVol[t], sq2_period[t], sq2_lenEnable[t], sq2_trigger[t], sq2_envAdd[t], sq2_out);
 
 	// Clock at falling edge so that nothing else is going on at the same time
 	// swDac dac(!clk, sq1_out, sq2_out);
