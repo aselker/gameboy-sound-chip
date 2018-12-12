@@ -5,7 +5,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd337
+`define PLAYBACK_LENGTH 10'd80
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
@@ -67,11 +67,33 @@ module gameboy();
 	end
 
 	wire [3:0] sq1_out, sq2_out, n_out, w_out;
+	reg sq1_trig, sq2_trig, n_trig, w_trig;
 
-	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_lenEnable[t], sq1_trigger[t], sq1_envAdd[t], sq1_out);
-	pulseChannel2 pc2(clk, clk256, clk128, clk64, sq2_freq[t], sq2_lenLoad[t], sq2_duty[t], sq2_startVol[t], sq2_period[t], sq2_lenEnable[t], sq2_trigger[t], sq2_envAdd[t], sq2_out);
-	noiseChannel n(clk, clk256, clk64, n_lenLoad[t], n_startVol[t], n_envAdd[t], n_period[t], n_clkShift[t],  n_widthMode[t], n_divisor[t], n_trigger[t], n_lenEnable[t], n_out);
-	waveChannel w(clk, clk256, w_enable[t], w_vol[t], w_lenLoad[t], w_trigger[t], w_lenEnable[t], w_freq[t], waveTable, w_out);
+	always @(posedge clk) begin
+		sq1_trig = sq1_trigger[t];
+		#1
+		sq1_trig = 0;
+	end
+	always @(posedge clk) begin
+		sq2_trig = sq2_trigger[t];
+		#1
+		sq2_trig = 0;
+	end
+	always @(posedge clk) begin
+		n_trig = n_trigger[t];
+		#1
+		n_trig = 0;
+	end
+	always @(posedge clk) begin
+		w_trig = w_trigger[t];
+		#1
+		w_trig = 0;
+	end
+
+	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_lenEnable[t], sq1_trig, sq1_envAdd[t], sq1_out);
+	pulseChannel2 pc2(clk, clk256, clk128, clk64, sq2_freq[t], sq2_lenLoad[t], sq2_duty[t], sq2_startVol[t], sq2_period[t], sq2_lenEnable[t], sq2_trig, sq2_envAdd[t], sq2_out);
+	noiseChannel n(clk, clk256, clk64, n_lenLoad[t], n_startVol[t], n_envAdd[t], n_period[t], n_clkShift[t],  n_widthMode[t], n_divisor[t], n_trig, n_lenEnable[t], n_out);
+	waveChannel w(clk, clk256, w_enable[t], w_vol[t], w_lenLoad[t], w_trig, w_lenEnable[t], w_freq[t], waveTable, w_out);
 
 
 
