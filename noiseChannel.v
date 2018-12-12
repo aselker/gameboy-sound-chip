@@ -25,7 +25,6 @@ module noiseChannel(
 	wire chanEnable, srClk;
 	wire [6:0] period;
 	reg [14:0] sr;
-
 	
 	lenCounter lc(clk256, lenLoad, trigger, lenEnable, chanEnable);
 

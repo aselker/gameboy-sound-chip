@@ -4,7 +4,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd80
+`define PLAYBACK_LENGTH 10'd60
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
@@ -44,6 +44,12 @@ module gameboy();
 	`LONGREG [2:0] n_divisor;
 	`LONGREG n_trigger;
 	`LONGREG n_lenEnable;
+
+	`LONGREG [1:0] w_vol;
+	`LONGREG [5:0] w_lenLoad;
+	`LONGREG w_trigger;
+	`LONGREG w_lenEnable;
+	`LONGREG [10:0] w_freq;
 
 	wire clk; baseClk baseclk(clk);
 	wire clk256; fixedTimer #(16384) tmr256(clk, clk256);
