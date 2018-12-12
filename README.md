@@ -1,3 +1,5 @@
+Read about our project, or [view the Git repo](https://github.com/aselker/gameboy-sound-chip).
+
 # GameBoy Sound Chip
 
 This is Verilog simulation of the sound chip in the original Nintendo GameBoy.  
