@@ -2,7 +2,7 @@ Read about our project, [view the Git repo](https://github.com/aselker/gameboy-s
 
 - [**Legend of Zelda Theme**](https://youtu.be/axIZ2bxcV3E)
 
-- [**Kirby Gourmet Dash**](https://www.youtube.com/watch?v=nFmwLb5xxa)
+- [**Kirby Gourmet Dash**](https://www.youtube.com/watch?v=nFmwLb5xxa8)
 
 # GameBoy Sound Chip
 
