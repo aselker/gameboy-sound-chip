@@ -1,15 +1,15 @@
 `include "pulseChannel1.v"
 `include "noiseChannel.v"
+`include "waveChannel.v"
 `include "mixer.v"
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd60
+`define PLAYBACK_LENGTH 10'd337
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
 
-	reg [31:0] [3:0] waveTable;
 
 	// Square 1
 	`LONGREG [2:0] sq1_swpPd;
@@ -45,11 +45,14 @@ module gameboy();
 	`LONGREG n_trigger;
 	`LONGREG n_lenEnable;
 
+	`LONGREG w_enable;
 	`LONGREG [1:0] w_vol;
 	`LONGREG [5:0] w_lenLoad;
 	`LONGREG w_trigger;
 	`LONGREG w_lenEnable;
 	`LONGREG [10:0] w_freq;
+
+	reg [31:0] [3:0] waveTable;
 
 	wire clk; baseClk baseclk(clk);
 	wire clk256; fixedTimer #(16384) tmr256(clk, clk256);
@@ -63,16 +66,18 @@ module gameboy();
 		else $finish;
 	end
 
-	wire [3:0] sq1_out, sq2_out, n_out;
+	wire [3:0] sq1_out, sq2_out, n_out, w_out;
 
 	pulseChannel1 pc1(clk, clk256, clk128, clk64, sq1_swpPd[t], sq1_negate[t], sq1_shift[t], sq1_freq[t], sq1_lenLoad[t], sq1_duty[t], sq1_startVol[t], sq1_period[t], sq1_lenEnable[t], sq1_trigger[t], sq1_envAdd[t], sq1_out);
 	pulseChannel2 pc2(clk, clk256, clk128, clk64, sq2_freq[t], sq2_lenLoad[t], sq2_duty[t], sq2_startVol[t], sq2_period[t], sq2_lenEnable[t], sq2_trigger[t], sq2_envAdd[t], sq2_out);
 	noiseChannel n(clk, clk256, clk64, n_lenLoad[t], n_startVol[t], n_envAdd[t], n_period[t], n_clkShift[t],  n_widthMode[t], n_divisor[t], n_trigger[t], n_lenEnable[t], n_out);
+	waveChannel w(clk, clk256, w_enable[t], w_vol[t], w_lenLoad[t], w_trigger[t], w_lenEnable[t], w_freq[t], waveTable, w_out);
+
 
 
 	// Clock at falling edge so that nothing else is going on at the same time
 	// swDac dac(!clk, sq1_out, sq2_out);
-	mixer mxr(clk, 4'b1101, 4'b1101, 3'b111, 3'b111, sq1_out, sq2_out, 4'd0, n_out);
+	mixer mxr(clk, 4'b1111, 4'b1111, 3'b111, 3'b111, sq1_out, sq2_out, w_out, n_out);
 
 	reg [4:0] ii; // Fill in the wave table with a triangle wave
 

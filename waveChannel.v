@@ -1,5 +1,5 @@
-`include "timers.v"
-`include "lenCounter.v"
+// `include "timers.v"
+// `include "lenCounter.v"
 
 /*
 NR30 FF1A E--- ---- DAC power
