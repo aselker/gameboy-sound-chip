@@ -44,9 +44,38 @@ Because of the relative complexity of the system, we broke it down into its four
 
 #### Pulse Channels
 
-![Pulse Channel 1](https://github.com/aselker/gameboy-sound-chip/blob/master/Pulse1.jpg?raw=true)
+The two pulse channels generate square waves with variable frequency, duty cycle, length, and volume envelope. The control signals for Pulse Channel 2 are defined below:
+
+| Signal         | Length | Description |
+| -------------- | --- | --- |
+| Duty Cycle | 2 | Selects a duty cycle among 12.5%, 25%, 50%, and 75% | 
+| Length Load | 6 | Defines a time to pulse, after which channel stops |
+| Volume | 4 | Starting volume |
+| Add Mode | 1 | When true, volume envelope increases in amplitude |
+| Period | 3 | Defines the period at which the envelope is incremented |
+| Frequency | 11 | Defines the starting frequency of the pulse wave |
+| Trigger | 1 | When true, starts playback and resets counters |
+| Length Enable | 1 | When true, length counter is decremented |
+
+Based on these definitions, we broke down the second pulse channel into a number of submodules:
+
+- **Frequency Timer**: This module takes in the frequency argument and produces a clock signal eight times the desired frequency.
+
+- **Duty Cycler**: This module takes in the frequency clock and the duty cycle argument. It produces a pulse signal by cycling through one of four eight-bit shift register selected by the duty cycle input. The output frequency is therefore one eigth that of the frequency timer.
+
+- **Length Timer**: This module sets an internal counter on each trigger event, and decrements every clock cycle. After the counter reaches zero, the output is set low, silencing the channel.
+
+- **Volume Controller**: This module controls the volume envelope of the channel. On a trigger event, it sets its output equal to the starting volume argument. It then decrements (or increments, if add mode is true) with a period defined by the period argument every clock cycle. This essentially gives the ability to "fade" notes in and out of the channel.
+
+A diagram of the entire channel is illustrated below:
 
 ![Pulse Channel 2](https://github.com/aselker/gameboy-sound-chip/blob/master/Pulse2.jpg?raw=true)
+
+The first pulse channel, in addition to having the same functionality as Pulse Channel 2, has a frequency sweeper module:
+
+- **Frequency Sweeper**: This module allows the channel to continuously change its frequency over a sustained note. On a trigger event, its output is set to the frequency argument, after which it begins to increment (or decrement, depending on negate) an amount based on the shift argument. This frequency output is fed into the Frequency Timer.
+
+![Pulse Channel 1](https://github.com/aselker/gameboy-sound-chip/blob/master/Pulse1.jpg?raw=true)
 
 #### Noise Channel
 
