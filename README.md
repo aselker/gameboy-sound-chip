@@ -1,6 +1,8 @@
 # GameBoy Sound Chip
 
-This is Verilog simulation of the sound chip in the original Nintendo GameBoy.  It aims to reproduce all or almost all game music, though it is not bug-for-bug compatible.  At the moment, the sound chip is incomplete.
+This is Verilog simulation of the sound chip in the original Nintendo GameBoy.  
+
+We use the same control signals as the original hardware, and produce a 4-bit, stereo audio signal. It should be able to fully reproduce original GameBoy music, though it is not bug-for-bug compatible.
 
 This is a project for Computer Architecture at Olin College, over Fall 2018.  Most of the information used in creating and documenting this project has come from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).
 
@@ -10,7 +12,7 @@ The GameBoy sound chip exists to synthesize simple sounds for music and sound ef
 
 #### Sound Channels
 
-Sounds are created by four *channels*, mixed together and played in stereo: 
+Sounds are created by four *channels*, mixed together and played in stereo:
 - A square wave channel that perform frequency sweeps,
 - A second square wave channel that can only play a constant frequency,
 - A noise channel, and
@@ -32,4 +34,4 @@ The GameBoy sound system is mostly the same between the first few generations of
 
 ## Verilog Implementation
 
-TODO
+Because of the relative complexity of the system, we broke it down into its four channels, and then further into several smaller modules.
