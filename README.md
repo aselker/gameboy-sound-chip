@@ -119,3 +119,9 @@ The mixer control signals are fixed in our demo, because there is no reason to c
 ## Sources
 
 We got a lot of information about the sound chip from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).  A few details also came from "GBSOUND.TXT", a copy of which we found [here]( http://www.devrs.com/gb/files/hosted/GBSOUND.txt).
+
+Additionally we used the following YouTube videos to help transcribe the music samples we used:
+
+- [Zelda Opening Theme](https://www.youtube.com/watch?v=hKrclscP9qk)
+
+- [Kirby Super Star // Gourmet Race](https://www.youtube.com/watch?v=uGQTVGUso9k)
