@@ -1,4 +1,8 @@
-Read about our project, [view the Git repo](https://github.com/aselker/gameboy-sound-chip), or [listen to the music](https://raw.githubusercontent.com/aselker/gameboy-sound-chip/master/audio%20files/zelda3.mp3)!
+Read about our project, [view the Git repo](https://github.com/aselker/gameboy-sound-chip), or listen to the music!
+
+- [**Legend of Zelda Theme**](https://youtu.be/axIZ2bxcV3E)
+
+- [**Kirby Gourmet Dash**](https://www.youtube.com/watch?v=nFmwLb5xxa)
 
 # GameBoy Sound Chip
 
