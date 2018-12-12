@@ -28,6 +28,8 @@ Sounds are created by four *channels*, mixed together and played in stereo:
 
 The four channels are mixed together and played in stereo.  Each channel has only four bits, but because they have individual volume controls, some subtlety and dynamic range is possible.
 
+![System](https://github.com/aselker/gameboy-sound-chip/blob/master/System.jpg?raw=true)
+
 #### Specific Channel Behaviors
 
 Each channel has its volume control, and a "length counter" which can shut the channel off after some amount of time.  The square wave and noise channels also have "volume envelopes", which can continuously vary the volume of the channel.
@@ -43,10 +45,6 @@ The GameBoy sound system is mostly the same between the first few generations of
 ## Verilog Implementation
 
 Because of the relative complexity of the system, we broke it down into its four channels, and then further into several smaller modules.
-
-#### System
-
-![System](https://github.com/aselker/gameboy-sound-chip/blob/master/System.jpg?raw=true)
 
 #### Pulse Channels
 
@@ -98,6 +96,8 @@ Because the LFSR is not very random, the "noise" it produces has noticeable peri
 It has a length timer and volume controller to simplify generation of short pulses of noise.
 
 #### Wave Channel
+
+![Wave Channel](https://github.com/aselker/gameboy-sound-chip/blob/master/Wave.jpg?raw=true)
 
 The wave channel can play an arbitrary wave.  The wave is composed of 32 4-bit samples, each of which defines the output at a single timestep.  The channel loops through the 32 samples at a speed controlled by the channel's inputs, where an input of X plays one sample every (2048-X)\*2 cycles of the 4mhz clock.  The wave channel also has a volume control, which can set the volume to 0% (silent), 25%, 50%, or 100%.
 
