@@ -1,4 +1,4 @@
-Read about our project, or [view the Git repo](https://github.com/aselker/gameboy-sound-chip).
+Read about our project, [view the Git repo](https://github.com/aselker/gameboy-sound-chip), or [listen to the music](https://raw.githubusercontent.com/aselker/gameboy-sound-chip/master/audio%20files/zelda3.mp3)!
 
 # GameBoy Sound Chip
 
