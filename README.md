@@ -8,6 +8,12 @@ We use the same control signals as the original hardware, and produce a 4-bit, s
 
 This is a project for Computer Architecture at Olin College, over Fall 2018.  Most of the information used in creating and documenting this project has come from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).
 
+## Why?
+
+The GameBoy sold over 119 million units, making it one of the best-selling game consoles ever.  Many a hacker remembers their GameBoy better than any of their primary-school classes, and games like The Legend of Zelda are now mainstays of nerd culture.  From the other direction, sound chips like the one in the GameBoy inspired the musical genre of "chiptunes", which have since had a significant impact on modern popular and electronic music.  We see recreating the GameBoy's sound chip as a way to remember the roots of these cultural influences.
+
+Creating the sound chip has also been an opportunity to learn about computer architecture and IC design.  Not only did we get to build the system, we also could observe the design decisions made by the original engineers, and see how they affect the layout and behavior of the sound chip in general.
+
 ## Behavior overview
 
 The GameBoy sound chip exists to synthesize simple sounds for music and sound effects.  It tries to do work so the CPU doesn't have to, since the CPU is fairly slow and might not have time.  (Today, "sound cards" are mostly just DACs, because modern computers have the resources to generate sounds in software.)
@@ -95,7 +101,7 @@ It has a length timer and volume controller to simplify generation of short puls
 
 The wave channel can play an arbitrary wave.  The wave is composed of 32 4-bit samples, each of which defines the output at a single timestep.  The channel loops through the 32 samples at a speed controlled by the channel's inputs, where an input of X plays one sample every (2048-X)\*2 cycles of the 4mhz clock.  The wave channel also has a volume control, which can set the volume to 0% (silent), 25%, 50%, or 100%.
 
-Like the other channels, it has a length timer.  It does not have a volume controller.
+Like the other channels, it has a length timer.  It does not, however, have a volume controller that scales over time; the volume is fixed.
 
 #### Mixer
 
