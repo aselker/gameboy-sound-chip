@@ -2,11 +2,11 @@ Read about our project, [view the Git repo](https://github.com/aselker/gameboy-s
 
 # GameBoy Sound Chip
 
-This is Verilog simulation of the sound chip in the original Nintendo GameBoy.  
+This is Verilog recreation of the sound chip in the original Nintendo GameBoy.  
 
-We use the same control signals as the original hardware, and produce a 4-bit, stereo audio signal. It should be able to fully reproduce original GameBoy music, though it is not bug-for-bug compatible.
+We use the same control signals as the original hardware, and produce a 9-bit, stereo audio signal. It should be able to reproduce most original GameBoy music, though it is not bug-for-bug compatible.
 
-This is a project for Computer Architecture at Olin College, over Fall 2018.  Most of the information used in creating and documenting this project has come from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).
+This is a project for Computer Architecture at Olin College, over Fall 2018.  Much of the information used in creating and documenting this project has come from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).
 
 ## Why?
 
@@ -21,7 +21,7 @@ The GameBoy sound chip exists to synthesize simple sounds for music and sound ef
 #### Sound Channels
 
 Sounds are created by four *channels*, mixed together and played in stereo:
-- A square wave channel that perform frequency sweeps,
+- A square wave ("pulse") channel that perform frequency sweeps,
 - A second square wave channel that can only play a constant frequency,
 - A noise channel, and
 - An arbitrary wave channel.
@@ -32,13 +32,13 @@ The four channels are mixed together and played in stereo.  Each channel has onl
 
 #### Specific Channel Behaviors
 
-Each channel has its volume control, and a "length counter" which can shut the channel off after some amount of time.  The square wave and noise channels also have "volume envelopes", which can continuously vary the volume of the channel.
+Each channel has an on/off switch, a volume control, and a "length counter" which can shut the channel off after some amount of time.  The square wave and noise channels also have "volume envelopes", which can continuously vary the volume of the channel.
 
 The square wave channels create square waves of arbitrary frequency and volume, and with a duty cycle of either 12.5%, 25%, 50%, or 75%.  The first square wave channel can also continuously vary its frequency over time, with a programmable speed.
 
 The noise channel uses a linear feedback shift register (LFSR) as a simple pseudorandom number generator to create white noise.  Its frequency and shift-register length are adjustable.
 
-The wave channel can play arbitrary samples.  There are 32 four-bit "samples", each of which represents just a single point in time, though the playback speed can be adjusted.  The samples, like all of the sound chip's inputs, are memory-mapped to the CPU's memory.
+The wave channel can play arbitrary samples.  There are 32 four-bit "samples", each of which represents just a single point in time, which are played back at a speed which can be adjusted.  The samples, like all of the sound chip's inputs, are memory-mapped to the CPU's memory.
 
 The GameBoy sound system is mostly the same between the first few generations of GameBoy (original, Pocket, Color, Super Game Boy), with some obscure differences.  We won't bother to copy those differences.
 
@@ -109,4 +109,4 @@ The mixer takes as input the outputs of the four channels, and a few control sig
 
 In the original hardware, the mixing was done using analog signals, with a separate DAC for each of the four channels.  There is also a "raw input" which comes straight from the game cartridge, which could contain its own audio hardware.  Neither of these makes sense to emulate here, since FPGAs are inherently digital and there is no cartridge.
 
-The mixer control signals are fixed in our demo, because there is no reason to change them for a single song.  They could be sequenced as easily as the other components, however.
+The mixer control signals are fixed in our demo, because there is no reason to change them for a single song.  They could be sequenced as easily as the channel inputs, however.

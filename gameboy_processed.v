@@ -5,7 +5,7 @@
 
 `define PERIOD 4194304/16
 `define LENGTH 10'd1023
-`define PLAYBACK_LENGTH 10'd80
+`define PLAYBACK_LENGTH 10'd394
 `define LONGREG reg [`LENGTH:0]
 
 module gameboy();
