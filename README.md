@@ -93,6 +93,8 @@ It has a length timer and volume controller to simplify generation of short puls
 
 #### Wave Channel
 
+![Wave Channel](https://github.com/aselker/gameboy-sound-chip/blob/master/Wave.jpg?raw=true)
+
 The wave channel can play an arbitrary wave.  The wave is composed of 32 4-bit samples, each of which defines the output at a single timestep.  The channel loops through the 32 samples at a speed controlled by the channel's inputs, where an input of X plays one sample every (2048-X)\*2 cycles of the 4mhz clock.  The wave channel also has a volume control, which can set the volume to 0% (silent), 25%, 50%, or 100%.
 
 Like the other channels, it has a length timer.  It does not have a volume controller.
