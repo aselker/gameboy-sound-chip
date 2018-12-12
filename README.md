@@ -114,3 +114,8 @@ The mixer takes as input the outputs of the four channels, and a few control sig
 In the original hardware, the mixing was done using analog signals, with a separate DAC for each of the four channels.  There is also a "raw input" which comes straight from the game cartridge, which could contain its own audio hardware.  Neither of these makes sense to emulate here, since FPGAs are inherently digital and there is no cartridge.
 
 The mixer control signals are fixed in our demo, because there is no reason to change them for a single song.  They could be sequenced as easily as the channel inputs, however.
+
+
+## Sources
+
+We got a lot of information about the sound chip from the [GBDev Wiki](http://gbdev.gg8.se/wiki/articles/Gameboy_sound_hardware).  A few details also came from "GBSOUND.TXT", a copy of which we found [here]( http://www.devrs.com/gb/files/hosted/GBSOUND.txt).
