@@ -8,7 +8,7 @@ This is a project for Computer Architecture at Olin College, over Fall 2018.  Mo
 
 ## Behavior overview
 
-The GameBoy sound chip exists to synthesize simple sounds for music and sound effects.  It tries to do work so the CPU doesn't have to, since the CPU is fairly slow and might not have time.  (Today, "sound cards" are mostly just DACs, because modern CPUs can spare the time to generate sounds in software.)
+The GameBoy sound chip exists to synthesize simple sounds for music and sound effects.  It tries to do work so the CPU doesn't have to, since the CPU is fairly slow and might not have time.  (Today, "sound cards" are mostly just DACs, because modern computers have the resources to generate sounds in software.)
 
 #### Sound Channels
 
