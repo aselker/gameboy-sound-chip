@@ -22,6 +22,8 @@ Sounds are created by four *channels*, mixed together and played in stereo:
 
 The four channels are mixed together and played in stereo.  Each channel has only four bits, but because they have individual volume controls, some subtlety and dynamic range is possible.
 
+![System](https://github.com/aselker/gameboy-sound-chip/blob/master/System.jpg?raw=true)
+
 #### Specific Channel Behaviors
 
 Each channel has its volume control, and a "length counter" which can shut the channel off after some amount of time.  The square wave and noise channels also have "volume envelopes", which can continuously vary the volume of the channel.
@@ -37,10 +39,6 @@ The GameBoy sound system is mostly the same between the first few generations of
 ## Verilog Implementation
 
 Because of the relative complexity of the system, we broke it down into its four channels, and then further into several smaller modules.
-
-#### System
-
-![System](https://github.com/aselker/gameboy-sound-chip/blob/master/System.jpg?raw=true)
 
 #### Pulse Channels
 
