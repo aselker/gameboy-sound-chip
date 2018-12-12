@@ -51,3 +51,27 @@ Because of the relative complexity of the system, we broke it down into its four
 #### Noise Channel
 
 ![Noise Channel](https://github.com/aselker/gameboy-sound-chip/blob/master/Noise.jpg?raw=true)
+
+The core of the noise channel is a linear-feedback shift register (LFSR), which functions as a simple pseudorandom number generator.  The LFSR consists of a 15-bit shift register.  Every time-step, the shift register XORs the two low bits, inserts it in the high bit, and shifts the rest of the bits right by one.
+
+If the "width mode" input is set, then the LFSR also inserts the result of the XOR into bit 6 (after the shift), making the shift register effectively only 7 bits long.
+
+The clock for the LFSR is driven by a timer from the main 4mhz clock.  The timer's period is controlled by an input to the channel, and can be set to either 8 ticks, or between 16 and 112 (inclusive) in steps of 16.
+
+Because the LFSR is not very random, the "noise" it produces has noticeable periodic components and does not sound exactly like "real" white noise.
+
+It has a length timer and volume controller to simplify generation of short pulses of noise.
+
+#### Wave Channel
+
+The wave channel can play an arbitrary wave.  The wave is composed of 32 4-bit samples, each of which defines the output at a single timestep.  The channel loops through the 32 samples at a speed controlled by the channel's inputs, where an input of X plays one sample every (2048-X)\*2 cycles of the 4mhz clock.  The wave channel also has a volume control, which can set the volume to 0% (silent), 25%, 50%, or 100%.
+
+Like the other channels, it has a length timer.  It does not have a volume controller.
+
+#### Mixer
+
+The mixer takes as input the outputs of the four channels, and a few control signals.  It combines them into a stereo audio signal. There is a separate enable wire for each channel and each ear, for a total of eight enable wires.  There is also a 3-bit volume controller for each ear.  
+
+In the original hardware, the mixing was done using analog signals, with a separate DAC for each of the four channels.  There is also a "raw input" which comes straight from the game cartridge, which could contain its own audio hardware.  Neither of these makes sense to emulate here, since FPGAs are inherently digital and there is no cartridge.
+
+The mixer control signals are fixed in our demo, because there is no reason to change them for a single song.  They could be sequenced as easily as the other components, however.
