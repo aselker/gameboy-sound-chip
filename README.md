@@ -35,3 +35,17 @@ The GameBoy sound system is mostly the same between the first few generations of
 ## Verilog Implementation
 
 Because of the relative complexity of the system, we broke it down into its four channels, and then further into several smaller modules.
+
+#### System
+
+![System](https://github.com/aselker/gameboy-sound-chip/blob/master/System.jpg?raw=true)
+
+#### Pulse Channels
+
+![Pulse Channel 1](https://github.com/aselker/gameboy-sound-chip/blob/master/Pulse1.jpg?raw=true)
+
+![Pulse Channel 2](https://github.com/aselker/gameboy-sound-chip/blob/master/Pulse2.jpg?raw=true)
+
+#### Noise Channel
+
+![Noise Channel](https://github.com/aselker/gameboy-sound-chip/blob/master/Noise.jpg?raw=true)
